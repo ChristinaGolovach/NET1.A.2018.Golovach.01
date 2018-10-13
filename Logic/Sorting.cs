@@ -3,8 +3,23 @@ using System.Linq;
 
 namespace Logic
 {
+    /// <summary>
+    /// Represents a class that performs sorting of an integer array using merge and quick algorithms
+    /// </summary>
     public static class Sorting
     {
+        /// <summary>
+        /// Perform sorting of integer array by using merge algorithm
+        /// </summary>
+        /// <param name="array">
+        /// The target array for sorting
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when the target array is null
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown when the target array is empty
+        /// </exception>
         public static void MergeSort(int[] array)
         {
             CheckInputArray(array);
@@ -12,6 +27,18 @@ namespace Logic
             HiddenMergeSort(array);            
         }
 
+        /// <summary>
+        ///  Perform sorting of integer array by using quick algorithm
+        /// </summary>
+        /// <param name="array">
+        /// The target array for sorting
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when the target array is null
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown when the target array is empty
+        /// </exception>
         public static void QuickSort(int[] array)
         {
             CheckInputArray(array);
