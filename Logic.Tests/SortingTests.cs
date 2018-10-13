@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static Logic.Sorting;
 
@@ -7,6 +8,9 @@ namespace Logic.Tests
     [TestClass]
     public class SortingTests
     {
+
+#region Merge Sort Tests
+
         [TestMethod]
         public void MergeSort_TakeUnsortedArray_ReturnSortedArray()
         {
@@ -31,11 +35,10 @@ namespace Logic.Tests
             // Act
             MergeSort(input);
 
-            // Act
+            // Assert
             CollectionAssert.AreEqual(expectedResult, input);
          }
-
-        // TODO to finish this test and make tests for quick sorting
+        
         [TestMethod]
         public void MergeSort_TakeSortedArray_ReturnTheSameArray()
         {
@@ -46,10 +49,10 @@ namespace Logic.Tests
             // Act
             MergeSort(input);
 
-            // Act
+            // Assert
             CollectionAssert.AreEqual(expectedResult, input);
         }
-        
+
         [TestMethod]
         public void MergeSort_TakeRandomLargeUnsortedArray_ReturnSortedArray()
         {
@@ -59,7 +62,16 @@ namespace Logic.Tests
             for (int i = 0; i < input.Length; i++)
             {
                 input[i] = random.Next();
-            }                    
+            }
+
+            int[] expectedResult = input.Take(input.Length).ToArray();
+            Array.Sort(expectedResult);
+
+            //Act
+            MergeSort(input);
+
+            //Assert
+            CollectionAssert.AreEqual(expectedResult, input);
         }
 
         [TestMethod]
@@ -71,5 +83,8 @@ namespace Logic.Tests
         [ExpectedException(typeof(ArgumentException))]
         public void MergeSort_TakeEmptyArray_ThrowArgumentException()
             => MergeSort(new int[0]);
+# endregion
+
+
     }
 }
