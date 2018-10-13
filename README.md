@@ -8,6 +8,8 @@
 # //TODO 
 Why in Logic.NUnitTests project in SortingTests.cs class NUnit framework gives error for such maner of test:
 
-private static int[] randomArray = GenerateLargeRandomArray(1000) 
+private static int[] randomArray = GenerateLargeRandomArray(1000)
+
 [Test, TestCaseSource(nameof(randomArray))]
+
 public void MergeSort_TakeUnsortedArray_ReturnSortedArray(int[] array) { .... }
