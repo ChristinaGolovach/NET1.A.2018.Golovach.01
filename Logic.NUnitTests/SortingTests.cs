@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using static Logic.Sorting;
 
@@ -11,15 +8,15 @@ namespace Logic.NUnitTests
     [TestFixture]
     public class SortingTests 
     {
-       // private static int[] randomArray = GenerateLargeRandomArray(1000);
+         private static int[] randomArray = GenerateLargeRandomArray(1000);
 
         #region Merge Sort
 
-        //TODO ask, why for this maner of test - [Test, TestCase(nameof(randomArray))] NUnit adapter gives error
+        //TODO ask, why for this maner of test - [Test, TestCaseSource(nameof(randomArray))] NUnit adapter gives error
 
         [TestCase(new int[] { 1, 3, 87, 90 })]
         [TestCase(new int[] { 1, 47, 14, 1, 9})]
-        [TestCase(new int[] { 89, -354, 1, 354, 0 })]      
+        [TestCase(new int[] { 89, -354, 1, 354, 0 })]         
         public void MergeSort_TakeUnsortedArray_ReturnSortedArray(int[] array)
         {
             // Arange
@@ -57,6 +54,50 @@ namespace Logic.NUnitTests
             => Assert.Throws<ArgumentException>(() => MergeSort(new int[0]));
 
         #endregion Merge Sort
+
+        #region Quick Sort
+
+        [TestCase(new int[] { 1, 3, 87, 90 })]
+        [TestCase(new int[] { 1, 47, 14, 1, 9 })]
+        [TestCase(new int[] { 89, -354, 1, 354, 0 })]
+        public void QuickSort_TakeUnsortedArray_ReturnSortedArray(int[] array)
+        {
+            // Arange
+            int[] expectedResult = array.Take(array.Length).ToArray();
+            Array.Sort(expectedResult);
+
+            // Act
+            QuickSort(array);
+
+            // Assert
+            CollectionAssert.AreEqual(expectedResult, array);
+        }
+
+        [Test]
+        public void QuickSort_TakeRandomLargeUnsortedArray_ReturnSortedArray()
+        {
+            // Arange
+            int[] input = GenerateLargeRandomArray(1000);
+            int[] expectedResult = input.Take(input.Length).ToArray();
+            Array.Sort(expectedResult);
+
+            // Act
+            QuickSort(input);
+
+            // Assert
+            CollectionAssert.AreEqual(expectedResult, input);
+        }
+
+        [Test]
+        public void QuickSort_WithNullArray_ThrowArgumentNullException()
+            => Assert.Throws<ArgumentNullException>(() => QuickSort(null));
+
+        [Test]
+        public void QuickSort_WithEmptyArray_ThrowArgumentException()
+            => Assert.Throws<ArgumentException>(() => QuickSort(new int[0]));
+
+        #endregion Quick Sort
+
 
         private static int[] GenerateLargeRandomArray(int capacity)
         {
