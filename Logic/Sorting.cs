@@ -7,33 +7,19 @@ namespace Logic
     {
         public static void MergeSort(int[] array)
         {
-            if (array == null)
-            {
-                throw new ArgumentNullException("Array is null.");
-            }
-
-            if (array.Length < 1)
-            {
-                throw new ArgumentException("Array is empty.");
-            }
+            CheckInputArray(array);
 
             HiddenMergeSort(array);            
         }
 
         public static void QuickSort(int[] array)
         {
-            if (array == null)
-            {
-                throw new ArgumentNullException("Array is null.");
-            }
-
-            if (array.Length < 1)
-            {
-                throw new ArgumentException("Array is empty.");
-            }
+            CheckInputArray(array);
 
             HiddenQuickSort(array, 0, array.Length - 1);
         }
+
+        #region Merge Sort Logic
 
         private static int[] HiddenMergeSort(int[] array)
         {
@@ -86,6 +72,9 @@ namespace Logic
             return arrayOut;
         }
 
+        #endregion Merge Sort Logic
+
+        #region Hidden Sort Logic
         private static void HiddenQuickSort(int[] array, int leftIndex, int rightIndex)
         {
             int i = leftIndex;
@@ -124,11 +113,26 @@ namespace Logic
             }
         }
 
+        #endregion Hidden Sort Logic
+
         private static void Swap(ref int a, ref int b)
         {
             int temp = a;
             a = b;
             b = temp;
+        }
+
+        private static void CheckInputArray(int[] array)
+        {
+            if (array == null)
+            {
+                throw new ArgumentNullException("Array is null.");
+            }
+
+            if (array.Length < 1)
+            {
+                throw new ArgumentException("Array is empty.");
+            }
         }
     }
 }

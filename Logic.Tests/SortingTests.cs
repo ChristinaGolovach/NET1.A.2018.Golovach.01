@@ -8,7 +8,6 @@ namespace Logic.Tests
     [TestClass]
     public class SortingTests
     {
-
         #region Merge Sort Tests
 
         [TestMethod]
@@ -57,20 +56,15 @@ namespace Logic.Tests
         public void MergeSort_TakeRandomLargeUnsortedArray_ReturnSortedArray()
         {
             // Arange
-            int[] input = new int[1000];
-            Random random = new Random();
-            for (int i = 0; i < input.Length; i++)
-            {
-                input[i] = random.Next();
-            }
+            int[] input = GenerateLargeRandomArray(1000);
 
             int[] expectedResult = input.Take(input.Length).ToArray();
             Array.Sort(expectedResult);
 
-            //Act
+            // Act
             MergeSort(input);
 
-            //Assert
+            // Assert
             CollectionAssert.AreEqual(expectedResult, input);
         }
 
@@ -83,7 +77,8 @@ namespace Logic.Tests
         [ExpectedException(typeof(ArgumentException))]
         public void MergeSort_TakeEmptyArray_ThrowArgumentException()
             => MergeSort(new int[0]);
-        #endregion
+
+        #endregion Merge Sort Tests
 
         #region Quick Sort Tests
 
@@ -133,20 +128,15 @@ namespace Logic.Tests
         public void QuickSort_TakeRandomLargeUnsortedArray_ReturnSortedArray()
         {
             // Arange
-            int[] input = new int[1000];
-            Random random = new Random();
-            for (int i = 0; i < input.Length; i++)
-            {
-                input[i] = random.Next();
-            }
+            int[] input = GenerateLargeRandomArray(1000);
 
             int[] expectedResult = input.Take(input.Length).ToArray();
             Array.Sort(expectedResult);
 
-            //Act
+            // Act
             QuickSort(input);
 
-            //Assert
+            // Assert
             CollectionAssert.AreEqual(expectedResult, input);
         }
 
@@ -160,6 +150,18 @@ namespace Logic.Tests
         public void QuickSort_TakeEmptyArray_ThrowArgumentException()
             => QuickSort(new int[0]);
 
-        #endregion
+        #endregion Quick Sort Tests
+
+        private static int[] GenerateLargeRandomArray(int capacity)
+        {
+            int[] array = new int[capacity];
+            Random random = new Random();
+            for (int i = 0; i < capacity; i++)
+            {
+                array[i] = random.Next();
+            }
+
+            return array;
+        }
     }
 }

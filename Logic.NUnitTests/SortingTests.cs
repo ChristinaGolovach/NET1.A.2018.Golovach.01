@@ -10,12 +10,11 @@ namespace Logic.NUnitTests
     {
          private static int[] randomArray = GenerateLargeRandomArray(1000);
 
-        #region Merge Sort
+        #region Merge Sort Test
 
-        //TODO ask, why for this maner of test - [Test, TestCaseSource(nameof(randomArray))] NUnit adapter gives error
-
+        // TODO ask, why for this maner of test - [Test, TestCaseSource(nameof(randomArray))] NUnit adapter gives error
         [TestCase(new int[] { 1, 3, 87, 90 })]
-        [TestCase(new int[] { 1, 47, 14, 1, 9})]
+        [TestCase(new int[] { 1, 47, 14, 1, 9 })]
         [TestCase(new int[] { 89, -354, 1, 354, 0 })]         
         public void MergeSort_TakeUnsortedArray_ReturnSortedArray(int[] array)
         {
@@ -53,9 +52,9 @@ namespace Logic.NUnitTests
         public void MergeSort_WithEmptyArray_ThrowArgumentException()
             => Assert.Throws<ArgumentException>(() => MergeSort(new int[0]));
 
-        #endregion Merge Sort
+        #endregion Merge Sort Tests
 
-        #region Quick Sort
+        #region Quick Sort Tests
 
         [TestCase(new int[] { 1, 3, 87, 90 })]
         [TestCase(new int[] { 1, 47, 14, 1, 9 })]
@@ -96,8 +95,7 @@ namespace Logic.NUnitTests
         public void QuickSort_WithEmptyArray_ThrowArgumentException()
             => Assert.Throws<ArgumentException>(() => QuickSort(new int[0]));
 
-        #endregion Quick Sort
-
+        #endregion Quick Sort Tests
 
         private static int[] GenerateLargeRandomArray(int capacity)
         {
@@ -107,6 +105,7 @@ namespace Logic.NUnitTests
             {
                 array[i] = random.Next();
             }
+
             return array;
         }
     }
