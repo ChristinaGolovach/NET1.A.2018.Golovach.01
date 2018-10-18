@@ -8,11 +8,8 @@ namespace Logic.NUnitTests
     [TestFixture]
     public class SortingTests 
     {
-         private static int[] randomArray = GenerateLargeRandomArray(1000);
-
         #region Merge Sort Test
 
-        // TODO ask, why for this maner of test - [Test, TestCaseSource(nameof(randomArray))] NUnit adapter gives error
         [TestCase(new int[] { 1, 3, 87, 90 })]
         [TestCase(new int[] { 1, 47, 14, 1, 9 })]
         [TestCase(new int[] { 89, -354, 1, 354, 0 })]         

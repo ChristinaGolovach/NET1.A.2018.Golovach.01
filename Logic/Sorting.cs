@@ -56,7 +56,7 @@ namespace Logic
             }
 
             int middle = array.Length / 2;
-
+           
             int[] leftSubArray = HiddenMergeSort(array.Take(middle).ToArray());
             int[] rightAubArray = HiddenMergeSort(array.Skip(middle).ToArray());
             int[] result = Merge(leftSubArray, rightAubArray);
@@ -153,12 +153,12 @@ namespace Logic
         {
             if (array == null)
             {
-                throw new ArgumentNullException("Array is null.");
+                throw new ArgumentNullException($"The {nameof(array)} is null.");
             }
 
             if (array.Length < 1)
             {
-                throw new ArgumentException("Array is empty.");
+                throw new ArgumentException($"The {nameof(array)} is empty.");
             }
         }
     }
