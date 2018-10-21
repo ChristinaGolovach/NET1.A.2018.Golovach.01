@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static Logic.Sorting;
 
@@ -57,8 +56,8 @@ namespace Logic.Tests
         {
             // Arange
             int[] input = GenerateLargeRandomArray(1000);
-
-            int[] expectedResult = input.Take(input.Length).ToArray();
+            int[] expectedResult = new int[input.Length];
+            Array.Copy(input, expectedResult, input.Length);
             Array.Sort(expectedResult);
 
             // Act
@@ -129,8 +128,8 @@ namespace Logic.Tests
         {
             // Arange
             int[] input = GenerateLargeRandomArray(1000);
-
-            int[] expectedResult = input.Take(input.Length).ToArray();
+            int[] expectedResult = new int[input.Length];
+            Array.Copy(input, expectedResult, input.Length);
             Array.Sort(expectedResult);
 
             // Act

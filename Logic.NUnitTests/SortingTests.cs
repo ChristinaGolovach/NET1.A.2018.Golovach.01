@@ -16,7 +16,8 @@ namespace Logic.NUnitTests
         public void MergeSort_TakeUnsortedArray_ReturnSortedArray(int[] array)
         {
             // Arange
-            int[] expectedResult = array.Take(array.Length).ToArray();
+            int[] expectedResult = new int[array.Length];
+            Array.Copy(array, expectedResult, array.Length);
             Array.Sort(expectedResult);
 
             // Act
@@ -31,7 +32,8 @@ namespace Logic.NUnitTests
         {
             // Arange
             int[] input = GenerateLargeRandomArray(1000);
-            int[] expectedResult = input.Take(input.Length).ToArray();
+            int[] expectedResult = new int[input.Length];
+            Array.Copy(input, expectedResult, input.Length);
             Array.Sort(expectedResult);
 
             // Act
@@ -59,7 +61,8 @@ namespace Logic.NUnitTests
         public void QuickSort_TakeUnsortedArray_ReturnSortedArray(int[] array)
         {
             // Arange
-            int[] expectedResult = array.Take(array.Length).ToArray();
+            int[] expectedResult = new int[array.Length];
+            Array.Copy(array, expectedResult, array.Length);
             Array.Sort(expectedResult);
 
             // Act
@@ -74,7 +77,8 @@ namespace Logic.NUnitTests
         {
             // Arange
             int[] input = GenerateLargeRandomArray(1000);
-            int[] expectedResult = input.Take(input.Length).ToArray();
+            int[] expectedResult = new int[input.Length];
+            Array.Copy(input, expectedResult, input.Length);            
             Array.Sort(expectedResult);
 
             // Act

@@ -9,35 +9,39 @@ namespace Logic
     public static class Sorting
     {
         /// <summary>
-        /// Perform sorting of integer array by using merge algorithm
+        /// Perform sorting of integer array by using merge algorithm.
         /// </summary>
         /// <param name="array">
-        /// The target array for sorting
+        /// The target array for sorting.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        /// Thrown when the target array is null
+        /// Thrown when the target array is null.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// Thrown when the target array is empty
+        /// Thrown when:
+        /// The target array is empty.
+        /// The length of target array more than 10000.
         /// </exception>
         public static void MergeSort(int[] array)
         {
             CheckInputArray(array);
 
-            HiddenMergeSort(array);            
+            HiddenMergeSort(array);             
         }
 
         /// <summary>
-        ///  Perform sorting of integer array by using quick algorithm
+        ///  Perform sorting of integer array by using quick algorithm.
         /// </summary>
         /// <param name="array">
-        /// The target array for sorting
+        /// The target array for sorting.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        /// Thrown when the target array is null
+        /// Thrown when the target array is null.
         /// </exception>
         /// <exception cref="ArgumentException">
-        /// Thrown when the target array is empty
+        /// Thrown when:
+        /// The target array is empty.
+        /// The  length of target array more than 10000.
         /// </exception>
         public static void QuickSort(int[] array)
         {
@@ -56,9 +60,15 @@ namespace Logic
             }
 
             int middle = array.Length / 2;
-           
-            int[] leftSubArray = HiddenMergeSort(array.Take(middle).ToArray());
-            int[] rightAubArray = HiddenMergeSort(array.Skip(middle).ToArray());
+
+            int[] lefPart = new int[middle];
+            int[] rightPArt = new int[array.Length - middle];
+
+            Array.Copy(array, 0, lefPart, 0, middle);
+            Array.Copy(array, middle, rightPArt, 0, array.Length - middle);
+
+            int[] leftSubArray = HiddenMergeSort(lefPart);
+            int[] rightAubArray = HiddenMergeSort(rightPArt);
             int[] result = Merge(leftSubArray, rightAubArray);
 
             Array.Copy(result, array, result.Length);
@@ -159,6 +169,11 @@ namespace Logic
             if (array.Length < 1)
             {
                 throw new ArgumentException($"The {nameof(array)} is empty.");
+            }
+
+            if (array.Length > 10000)
+            {
+                throw new ArgumentNullException($"The length of {nameof(array)} must be less than 10000.");
             }
         }
     }
