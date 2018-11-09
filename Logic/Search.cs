@@ -31,11 +31,11 @@ namespace Logic
             int rightIndex = array.Length - 1;
             int midIndex = 0;
 
-            while (leftIndex < rightIndex)
+            while (leftIndex <= rightIndex)
             {
                 midIndex = (leftIndex + rightIndex) >> 1;
 
-                if (comparison(array[midIndex],soughtValue) == 0)
+                if (comparison(array[midIndex], soughtValue) == 0)
                 {
                     return midIndex;
                 }
