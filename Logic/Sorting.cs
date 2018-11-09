@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace Logic
@@ -31,6 +30,33 @@ namespace Logic
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="array"></param>
+        /// <param name="comparer"></param>
+        public static void MergeSort<T>(T[] array, IComparer<T> comparer)
+        {
+            CheckInputArray(array);
+
+            HiddenMergeSort(array, comparer.Compare);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="array"></param>
+        public static void MergeSort<T>(T[] array)
+        {
+            CheckInputArray(array);
+
+            var comparer = Comparer<T>.Default;
+
+            HiddenMergeSort(array, comparer.Compare);
+        }
+
+        /// <summary>
         ///  Perform sorting of integer array by using quick algorithm.
         /// </summary>
         /// <param name="array">
@@ -49,6 +75,33 @@ namespace Logic
             CheckInputArray(array);
 
             HiddenQuickSort(array, 0, array.Length - 1, comparison);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="array"></param>
+        /// <param name="comparer"></param>
+        public static void QuickSort<T>(T[] array, IComparer<T> comparer)
+        {
+            CheckInputArray(array);
+
+            HiddenQuickSort(array, 0, array.Length - 1, comparer.Compare);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="array"></param>
+        public static void QuickSort<T>(T[] array)
+        {
+            CheckInputArray(array);
+
+            var comparer = Comparer<T>.Default;
+
+            HiddenQuickSort(array, 0, array.Length - 1, comparer.Compare);
         }
 
         #region Merge Sort Logic
