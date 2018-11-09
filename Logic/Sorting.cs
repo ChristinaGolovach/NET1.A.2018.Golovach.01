@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Logic
 {
@@ -22,11 +23,11 @@ namespace Logic
         /// The target array is empty.
         /// The length of target array more than 10000.
         /// </exception>
-        public static void MergeSort(int[] array)
+        public static void MergeSort<T>(T[] array, Comparison<T> comparison)
         {
             CheckInputArray(array);
 
-            HiddenMergeSort(array);             
+            HiddenMergeSort(array, comparison);             
         }
 
         /// <summary>
@@ -43,16 +44,16 @@ namespace Logic
         /// The target array is empty.
         /// The  length of target array more than 10000.
         /// </exception>
-        public static void QuickSort(int[] array)
+        public static void QuickSort<T>(T[] array, Comparison<T> comparison)
         {
             CheckInputArray(array);
 
-            HiddenQuickSort(array, 0, array.Length - 1);
+            HiddenQuickSort(array, 0, array.Length - 1, comparison);
         }
 
         #region Merge Sort Logic
 
-        private static int[] HiddenMergeSort(int[] array)
+        private static T[] HiddenMergeSort<T>(T[] array, Comparison<T> comparison)
         {
             if (array.Length == 1)
             {
@@ -61,32 +62,32 @@ namespace Logic
 
             int middle = array.Length / 2;
 
-            int[] lefPart = new int[middle];
-            int[] rightPArt = new int[array.Length - middle];
+            T[] lefPart = new T[middle];
+            T[] rightPArt = new T[array.Length - middle];
 
             Array.Copy(array, 0, lefPart, 0, middle);
             Array.Copy(array, middle, rightPArt, 0, array.Length - middle);
 
-            int[] leftSubArray = HiddenMergeSort(lefPart);
-            int[] rightAubArray = HiddenMergeSort(rightPArt);
-            int[] result = Merge(leftSubArray, rightAubArray);
+            T[] leftSubArray = HiddenMergeSort(lefPart, comparison);
+            T[] rightAubArray = HiddenMergeSort(rightPArt, comparison);
+            T[] result = Merge(leftSubArray, rightAubArray, comparison);
 
             Array.Copy(result, array, result.Length);
 
             return array;
         }
 
-        private static int[] Merge(int[] leftSubArray, int[] rightSubArray)
+        private static T[] Merge<T>(T[] leftSubArray, T[] rightSubArray, Comparison<T> comparison)
         {
             int i = 0;
             int j = 0;
             int k = 0;
             int capacity = leftSubArray.Length + rightSubArray.Length;
-            int[] arrayOut = new int[capacity];
+            T[] arrayOut = new T[capacity];
 
             while (i < leftSubArray.Length && j < rightSubArray.Length)
             {
-                if (leftSubArray[i] < rightSubArray[j])
+                if (comparison(leftSubArray[i], rightSubArray[j]) < 0) //(leftSubArray[i] < rightSubArray[j])
                 {
                     arrayOut[k++] = leftSubArray[i++];
                 }
@@ -112,21 +113,21 @@ namespace Logic
         #endregion Merge Sort Logic
 
         #region Hidden Sort Logic
-        private static void HiddenQuickSort(int[] array, int leftIndex, int rightIndex)
-        {
+       private static void HiddenQuickSort<T>(T[] array, int leftIndex, int rightIndex, Comparison<T> comparison)
+       {
             int i = leftIndex;
             int j = rightIndex;
-            int middleIndex = (leftIndex + rightIndex) / 2;
-            int middleItem = array[middleIndex];
+            int middleIndex = (leftIndex + rightIndex) / 2;     
+            T middleItem = array[middleIndex];
 
             while (i < j)
             {
-                while (array[i] < middleItem)
+                while (comparison(array[i], middleItem) < 0) 
                 {
                     i++;
                 }
 
-                while (array[j] > middleItem)
+                while (comparison(array[j], middleItem) > 0)
                 {
                     j--;
                 }
@@ -141,25 +142,25 @@ namespace Logic
 
             if (leftIndex < j)
             {
-                HiddenQuickSort(array, leftIndex, j);
+                HiddenQuickSort(array, leftIndex, j, comparison);
             }
 
             if (rightIndex > i)
             {
-                HiddenQuickSort(array, i, rightIndex);
+                 HiddenQuickSort(array, i, rightIndex, comparison);
             }
         }
 
         #endregion Hidden Sort Logic
 
-        private static void Swap(ref int a, ref int b)
+        private static void Swap<T>(ref T a, ref T b)
         {
-            int temp = a;
+            T temp = a;
             a = b;
             b = temp;
         }
 
-        private static void CheckInputArray(int[] array)
+        private static void CheckInputArray<T>(T[] array)
         {
             if (array == null)
             {
