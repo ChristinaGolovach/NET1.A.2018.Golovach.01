@@ -52,6 +52,8 @@ namespace Logic
             CheckInputArray(array);
 
             var comparer = Comparer<T>.Default;
+            if ((comparer as IComparer<T>) == null)
+                throw new ArgumentException($"Must implement");
 
             HiddenMergeSort(array, comparer.Compare);
         }
@@ -99,6 +101,9 @@ namespace Logic
         {
             CheckInputArray(array);
 
+            if ((typeof(T) as IComparable<T>) == null)
+                throw new ArgumentException("Must implemet IComparableInterface");
+
             var comparer = Comparer<T>.Default;
 
             HiddenQuickSort(array, 0, array.Length - 1, comparer.Compare);
@@ -140,7 +145,7 @@ namespace Logic
 
             while (i < leftSubArray.Length && j < rightSubArray.Length)
             {
-                if (comparison(leftSubArray[i], rightSubArray[j]) < 0) //(leftSubArray[i] < rightSubArray[j])
+                if (comparison(leftSubArray[i], rightSubArray[j]) < 0) 
                 {
                     arrayOut[k++] = leftSubArray[i++];
                 }
