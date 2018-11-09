@@ -3,23 +3,11 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using static Logic.Sorting;
 
-
 namespace Logic.NUnitTests
 {
     [TestFixture]
     public class SortingTests 
     {
-        private class Book: IComparable<Book>
-        {
-            public int Price { get; set; }
-            public string Name { get; set; }
-
-            public int CompareTo(Book other)
-            {
-                return this.Price.CompareTo(other.Price);
-            }
-        }
-
         #region Merge Sort Test
 
         [TestCase(new int[] { 1, 3, 87, 90 })]
@@ -27,7 +15,7 @@ namespace Logic.NUnitTests
         [TestCase(new int[] { 89, -354, 1, 354, 0 })]         
         public void MergeSort_TakeUnsortedArray_ReturnSortedArray(int[] array)
         {
-            // Arange
+            // Arrange
             int[] expectedResult = new int[array.Length];
             Array.Copy(array, expectedResult, array.Length);
             Array.Sort(expectedResult);
@@ -41,29 +29,43 @@ namespace Logic.NUnitTests
         }
        
         [Test]
-        public void MergeSort_TakeBookArray_ReturnSortedArray()
+        public void MergeSort_TakeBookArray_ReturnSortedArrayByName()
         {
-            Book[] array = new Book[] { new Book() { Name = "Second", Price = 2 }, new Book() { Name = "First", Price = 1 } };
+            BookForTests[] array = new BookForTests[] { new BookForTests() { Name = "Second", Price = 19 }, new BookForTests() { Name = "First", Price = 12 } };
 
-            // Arange
-            Book[] expectedResult = new Book[array.Length];
+            // Arrange
+            BookForTests[] expectedResult = new BookForTests[array.Length];
             Array.Copy(array, expectedResult, array.Length);
-            Array.Sort(expectedResult);
-          //  var comparison = Comparer<Book>.Default;
+            Array.Sort(expectedResult, BookForTests.CompareByName);
 
             // Act
-            MergeSort(array);//,comparison.Compare);
+            MergeSort(array, BookForTests.CompareByName);
 
             // Assert
             CollectionAssert.AreEqual(expectedResult, array);
         }
 
+        [Test]
+        public void MergeSort_TakeBookArray_ReturnSortedArrayByPrice()
+        {
+            BookForTests[] array = new BookForTests[] { new BookForTests() { Name = "Second", Price = 19 }, new BookForTests() { Name = "First", Price = 12 } };
 
+            // Arrange
+            BookForTests[] expectedResult = new BookForTests[array.Length];
+            Array.Copy(array, expectedResult, array.Length);
+            Array.Sort(expectedResult);
+
+            // Act
+            MergeSort(array);
+
+            // Assert
+            CollectionAssert.AreEqual(expectedResult, array);
+        }
 
         [Test]
         public void MergeSort_TakeRandomLargeUnsortedArray_ReturnSortedArray()
         {
-            // Arange
+            // Arrange
             int[] input = GenerateLargeRandomArray(1000);
             int[] expectedResult = new int[input.Length];
             Array.Copy(input, expectedResult, input.Length);
@@ -77,13 +79,13 @@ namespace Logic.NUnitTests
             CollectionAssert.AreEqual(expectedResult, input);
         }
 
-        //[Test]
-        //public void MergeSort_WithNullArray_ThrowArgumentNullException()
-        //    => Assert.Throws<ArgumentNullException>(() => MergeSort(null));
+        [Test]
+        public void MergeSort_WithNullArray_ThrowArgumentNullException()
+            => Assert.Throws<ArgumentNullException>(() => MergeSort<int>(null));
 
-        //[Test]
-        //public void MergeSort_WithEmptyArray_ThrowArgumentException()
-        //    => Assert.Throws<ArgumentException>(() => MergeSort(new int[0]));
+        [Test]
+        public void MergeSort_WithEmptyArray_ThrowArgumentException()
+            => Assert.Throws<ArgumentException>(() => MergeSort<int>(new int[0]));
 
         #endregion Merge Sort Tests
 
@@ -108,6 +110,40 @@ namespace Logic.NUnitTests
         }
 
         [Test]
+        public void QuickSort_TakeBookArray_ReturnSortedArrayByName()
+        {
+            BookForTests[] array = new BookForTests[] { new BookForTests() { Name = "Second", Price = 19 }, new BookForTests() { Name = "First", Price = 12 } };
+
+            // Arrange
+            BookForTests[] expectedResult = new BookForTests[array.Length];
+            Array.Copy(array, expectedResult, array.Length);
+            Array.Sort(expectedResult, BookForTests.CompareByName);
+
+            // Act
+            QuickSort(array, BookForTests.CompareByName);
+
+            // Assert
+            CollectionAssert.AreEqual(expectedResult, array);
+        }
+
+        [Test]
+        public void QuickSort_TakeBookArray_ReturnSortedArrayByPrice()
+        {
+            BookForTests[] array = new BookForTests[] { new BookForTests() { Name = "Second", Price = 19 }, new BookForTests() { Name = "First", Price = 12 } };
+
+            // Arrange
+            BookForTests[] expectedResult = new BookForTests[array.Length];
+            Array.Copy(array, expectedResult, array.Length);
+            Array.Sort(expectedResult);
+
+            // Act
+            QuickSort(array);
+
+            // Assert
+            CollectionAssert.AreEqual(expectedResult, array);
+        }
+
+        [Test]
         public void QuickSort_TakeRandomLargeUnsortedArray_ReturnSortedArray()
         {
             // Arange
@@ -124,13 +160,13 @@ namespace Logic.NUnitTests
             CollectionAssert.AreEqual(expectedResult, input);
         }
 
-        //[Test]
-        //public void QuickSort_WithNullArray_ThrowArgumentNullException()
-        //    => Assert.Throws<ArgumentNullException>(() => QuickSort(null));
+        [Test]
+        public void QuickSort_WithNullArray_ThrowArgumentNullException()
+            => Assert.Throws<ArgumentNullException>(() => QuickSort<int>(null));
 
-        //[Test]
-        //public void QuickSort_WithEmptyArray_ThrowArgumentException()
-        //    => Assert.Throws<ArgumentException>(() => QuickSort(new int[0]));
+        [Test]
+        public void QuickSort_WithEmptyArray_ThrowArgumentException()
+            => Assert.Throws<ArgumentException>(() => QuickSort<int>(new int[0]));
 
         #endregion Quick Sort Tests
 
