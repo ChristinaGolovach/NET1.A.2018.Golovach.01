@@ -1,14 +1,25 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 using NUnit.Framework;
 using static Logic.Sorting;
-using System.Collections.Generic;
+
 
 namespace Logic.NUnitTests
 {
     [TestFixture]
     public class SortingTests 
     {
+        private class Book: IComparable<Book>
+        {
+            public int Price { get; set; }
+            public string Name { get; set; }
+
+            public int CompareTo(Book other)
+            {
+                return this.Price.CompareTo(other.Price);
+            }
+        }
+
         #region Merge Sort Test
 
         [TestCase(new int[] { 1, 3, 87, 90 })]
@@ -28,6 +39,26 @@ namespace Logic.NUnitTests
             // Assert
             CollectionAssert.AreEqual(expectedResult, array);
         }
+       
+        [Test]
+        public void MergeSort_TakeBookArray_ReturnSortedArray()
+        {
+            Book[] array = new Book[] { new Book() { Name = "Second", Price = 2 }, new Book() { Name = "First", Price = 1 } };
+
+            // Arange
+            Book[] expectedResult = new Book[array.Length];
+            Array.Copy(array, expectedResult, array.Length);
+            Array.Sort(expectedResult);
+          //  var comparison = Comparer<Book>.Default;
+
+            // Act
+            MergeSort(array);//,comparison.Compare);
+
+            // Assert
+            CollectionAssert.AreEqual(expectedResult, array);
+        }
+
+
 
         [Test]
         public void MergeSort_TakeRandomLargeUnsortedArray_ReturnSortedArray()

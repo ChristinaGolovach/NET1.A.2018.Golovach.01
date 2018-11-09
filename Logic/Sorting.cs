@@ -50,10 +50,10 @@ namespace Logic
         public static void MergeSort<T>(T[] array)
         {
             CheckInputArray(array);
+            
+            CheckImplementationIComparable(array);
 
             var comparer = Comparer<T>.Default;
-            if ((comparer as IComparer<T>) == null)
-                throw new ArgumentException($"Must implement");
 
             HiddenMergeSort(array, comparer.Compare);
         }
@@ -101,8 +101,7 @@ namespace Logic
         {
             CheckInputArray(array);
 
-            if ((typeof(T) as IComparable<T>) == null)
-                throw new ArgumentException("Must implemet IComparableInterface");
+            CheckImplementationIComparable(array);
 
             var comparer = Comparer<T>.Default;
 
@@ -233,6 +232,17 @@ namespace Logic
             if (array.Length > 10000)
             {
                 throw new ArgumentNullException($"The length of {nameof(array)} must be less than 10000.");
+            }
+        }
+
+        private static void CheckImplementationIComparable<T>(T[] array)
+        {
+            //TODO ask: why this type of check does not work correct
+            //if ((typeof(T) as IComparable<T>) == null)
+
+            if (!typeof(IComparable<T>).IsAssignableFrom(typeof(T)))
+            {
+                throw new ArgumentException($"The {typeof(T)} must implement the IComparable<{typeof(T)}> interface.");
             }
         }
     }
