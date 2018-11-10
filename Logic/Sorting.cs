@@ -4,49 +4,78 @@ using System.Collections.Generic;
 namespace Logic
 {
     /// <summary>
-    /// Represents a class that performs sorting of an integer array using merge and quick algorithms
+    /// Represents a class that performs sorting of an array using merge and quick algorithms.
     /// </summary>
     public static class Sorting
     {
         /// <summary>
-        /// Perform sorting of integer array by using merge algorithm.
+        /// Perform sorting of array by using merge algorithm according to <paramref name="comparison"/>. 
         /// </summary>
         /// <param name="array">
         /// The target array for sorting.
         /// </param>
+        /// <param name="comparison">
+        /// Delegate that performs the comparison of two value.
+        /// </param>
         /// <exception cref="ArgumentNullException">
-        /// Thrown when the target array is null.
+        /// Thrown when the <paramref name="array"/> or <paramref name="comparison"/> is null.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// Thrown when:
-        /// The target array is empty.
-        /// The length of target array more than 10000.
+        /// The <paramref name="array"/> is empty.
+        /// The length of <paramref name="array"/> more than 10000.
         /// </exception>
         public static void MergeSort<T>(T[] array, Comparison<T> comparison)
         {
-            CheckInputArray(array);
+            CheckInputData(array, comparison);
 
             HiddenMergeSort(array, comparison);             
         }
 
         /// <summary>
-        /// 
+        /// Perform sorting of array by using merge algorithm according to <paramref name="comparer"/>.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="array"></param>
-        /// <param name="comparer"></param>
+        /// <typeparam name="T">
+        /// Any type.
+        /// </typeparam>
+        /// <param name="array">
+        /// The target array for sorting.
+        /// </param>
+        /// <param name="comparer">
+        /// Type that implements IComparer interface.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when the <paramref name="array"/> or <paramref name="comparer"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown when: 
+        /// The <paramref name="array"/> is empty.
+        /// The length of <paramref name="array"/> more than 10000.
+        /// </exception>
         public static void MergeSort<T>(T[] array, IComparer<T> comparer)
         {
-            CheckInputArray(array);
+            CheckInputData(array, comparer);
 
             HiddenMergeSort(array, comparer.Compare);
         }
 
         /// <summary>
-        /// 
+        /// Perform sorting of array by using merge algorithm according to default comparer for <typeparamref name="T"/>.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="array"></param>
+        /// <typeparam name="T">
+        /// Any type that implements IComparable<typeparamref name="T"/>.
+        /// </typeparam>
+        /// <param name="array">
+        /// The target array for sorting.</param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when the <paramref name="array"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown when:
+        /// The type <typeparamref name="T"/> does not implements IComparable<T>.
+        /// The target array is empty.
+        /// The length of target array more than 10000.
+        /// </exception>
         public static void MergeSort<T>(T[] array)
         {
             CheckInputArray(array);
@@ -59,44 +88,73 @@ namespace Logic
         }
 
         /// <summary>
-        ///  Perform sorting of integer array by using quick algorithm.
+        /// Perform sorting of array by using quick algorithm according to <paramref name="comparison"/>. 
         /// </summary>
         /// <param name="array">
         /// The target array for sorting.
         /// </param>
+        /// <param name="comparison">
+        /// Delegate that performs the comparison of two value.
+        /// </param>
         /// <exception cref="ArgumentNullException">
-        /// Thrown when the target array is null.
+        /// Thrown when the <paramref name="array"/> or <paramref name="comparison"/> is null.
         /// </exception>
         /// <exception cref="ArgumentException">
         /// Thrown when:
-        /// The target array is empty.
-        /// The  length of target array more than 10000.
+        /// The <paramref name="array"/> is empty.
+        /// The length of <paramref name="array"/> more than 10000.
         /// </exception>
         public static void QuickSort<T>(T[] array, Comparison<T> comparison)
         {
-            CheckInputArray(array);
+            CheckInputData(array, comparison);
 
             HiddenQuickSort(array, 0, array.Length - 1, comparison);
         }
 
         /// <summary>
-        /// 
+        /// Perform sorting of array by using quick algorithm according to <paramref name="comparer"/>.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="array"></param>
-        /// <param name="comparer"></param>
+        /// <typeparam name="T">
+        /// Any type.
+        /// </typeparam>
+        /// <param name="array">
+        /// The target array for sorting.
+        /// </param>
+        /// <param name="comparer">
+        /// Type that implements IComparer<typeparamref name="T"/> interface.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when the <paramref name="array"/> or <paramref name="comparer"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown when: 
+        /// The <paramref name="array"/> is empty.
+        /// The length of <paramref name="array"/> more than 10000.
+        /// </exception>
         public static void QuickSort<T>(T[] array, IComparer<T> comparer)
         {
-            CheckInputArray(array);
+            CheckInputData(array, comparer);
 
             HiddenQuickSort(array, 0, array.Length - 1, comparer.Compare);
         }
 
         /// <summary>
-        /// 
+        /// Perform sorting of array by using quick algorithm according to default comparer for <typeparamref name="T"/>.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="array"></param>
+        /// <typeparam name="T">
+        /// Any type that implements IComparable<typeparamref name="T"/>.
+        /// </typeparam>
+        /// <param name="array">
+        /// The target array for sorting.</param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when the <paramref name="array"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown when:
+        /// The type <typeparamref name="T"/> does not implements IComparable<T>.
+        /// The target array is empty.
+        /// The length of target array more than 10000.
+        /// </exception>
         public static void QuickSort<T>(T[] array)
         {
             CheckInputArray(array);
@@ -232,6 +290,27 @@ namespace Logic
             if (array.Length > 10000)
             {
                 throw new ArgumentNullException($"The length of {nameof(array)} must be less than 10000.");
+            }
+        }
+
+        private static void CheckInputData<T>(T[] array, Comparison<T> comparison)
+        {
+            CheckInputArray(array);
+
+            if (ReferenceEquals(comparison, null))
+            {
+                throw new ArgumentNullException($"The {nameof(comparison)} is null.");
+            }
+        }
+
+
+        private static void CheckInputData<T>(T[] array, IComparer<T> comparison)
+        {
+            CheckInputArray(array);
+
+            if (ReferenceEquals(comparison, null))
+            {
+                throw new ArgumentNullException($"The {nameof(comparison)} is null.");
             }
         }
 
