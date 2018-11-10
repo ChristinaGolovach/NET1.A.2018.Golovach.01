@@ -239,6 +239,8 @@ namespace Logic
         {
             //TODO ask: why this type of check does not work correct
             //if ((typeof(T) as IComparable<T>) == null)
+            //if(!(array.GetType() == typeof(IComparable<T>)))
+            //if ((array.GetType() as IComparable<T>) == null)
 
             if (!typeof(IComparable<T>).IsAssignableFrom(typeof(T)))
             {

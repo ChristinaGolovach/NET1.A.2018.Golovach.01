@@ -180,6 +180,6 @@ namespace Logic.NUnitTests
             }
 
             return array;
-        }
-    }
+        }        
+    }    
 }

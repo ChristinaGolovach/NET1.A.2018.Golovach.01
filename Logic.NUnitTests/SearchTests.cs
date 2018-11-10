@@ -10,9 +10,8 @@ namespace Logic.NUnitTests
     {
         [TestCase(new int[6] { -9, -7, 0, 4, 5, 78 }, -7, ExpectedResult = 1)]
         [TestCase(new int[] { 0, 4, 5, 78 }, 7, ExpectedResult = null)]
-        public int? BinarySearch_PassSortedINTArrayAndSoughtValue_ReturnIndexOfValueOrNull(int [] array, int  soughtValue)
+        public int? BinarySearch_PassSortedINTArrayAndSoughtValue_ReturnIndexOfValueOrNull(int[] array, int soughtValue)
              => BinarySearch(array, soughtValue);
-
 
         [TestCase(new string[] { "AA", "AB", "BB", "DA" }, "DA", ExpectedResult = 3)]
         [TestCase(new string[] { "AA", "AB", "BB", "DA" }, "FF", ExpectedResult = null)]
@@ -26,7 +25,6 @@ namespace Logic.NUnitTests
             BookForTests[] array = new BookForTests[] { new BookForTests() { Name = "First", Price = 12 },
                                                         new BookForTests() { Name = "Second", Price = 19 },
                                                         new BookForTests() { Name = "Third", Price = 22 } };
-
             BookForTests soughtValue = new BookForTests() { Name = "Third", Price = 99999 };
             int expectedIndex = 2;
 
@@ -44,7 +42,6 @@ namespace Logic.NUnitTests
             BookForTests[] array = new BookForTests[] { new BookForTests() { Name = "First", Price = 12 },
                                                         new BookForTests() { Name = "Second", Price = 19 },
                                                         new BookForTests() { Name = "Third", Price = 22 } };
-
             BookForTests soughtValue = new BookForTests() { Name = "OTHER", Price = 12 };
             int expectedIndex = 0;
 
@@ -57,7 +54,7 @@ namespace Logic.NUnitTests
 
         [Test]
         public void BinarySearch_PassNullArray_ThrownException()
-            =>Assert.Throws<ArgumentNullException>(() => BinarySearch(null, 3));
+            => Assert.Throws<ArgumentNullException>(() => BinarySearch(null, 3));
 
         [TestCase(new string[] { "AA", "AB", "BB", "DA" }, null)]
         public void BinarySearch_PassNullSoughtValue_ThrownException(string[] array, string soughtValue)
@@ -66,6 +63,5 @@ namespace Logic.NUnitTests
         [TestCase(new string[] { "AA", "AB", "BB", "DA" }, "DA")]
         public void BinarySearch_PassNullComparer_ThrownException(string[] array, string soughtValue)
             => Assert.Throws<ArgumentNullException>(() => BinarySearch(array, soughtValue, (Comparer<string>)null));
-
     }
 }

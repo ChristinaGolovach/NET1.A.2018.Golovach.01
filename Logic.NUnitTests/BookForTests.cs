@@ -6,11 +6,19 @@ namespace Logic.NUnitTests
     {
         private string name;
 
-        public int Price { get; set; }        
+        public int Price { get; set; }  
+        
         public string Name
         {
             get => name;
             set => name = value ?? throw new ArgumentNullException($"The {nameof(Name)} can not be null.");
+        }
+
+        public static int CompareByName(BookForTests firstBook, BookForTests secondBook)
+        {
+            CheckBooks(firstBook, secondBook);
+
+            return firstBook.Name.CompareTo(secondBook.Name);
         }
 
         public int CompareTo(BookForTests other)
@@ -21,13 +29,6 @@ namespace Logic.NUnitTests
             }
 
             return this.Price.CompareTo(other.Price);
-        }
-
-        public static int CompareByName(BookForTests firstBook, BookForTests secondBook)
-        {
-            CheckBooks(firstBook, secondBook);
-
-            return firstBook.Name.CompareTo(secondBook.Name);
         }
 
         private static void CheckBooks(BookForTests firstBook, BookForTests secondBook)
