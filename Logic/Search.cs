@@ -105,13 +105,97 @@ namespace Logic
         {
             CheckInputData(array, soughtValue, comparison);
 
-            int leftIndex = 0;
-            int rightIndex = array.Length - 1;
+            return BinarySearch(array, soughtValue, 0, array.Length - 1, comparison);
+        }
+
+        /// <summary>
+        /// Method performs binary search in sorted array according to <paramref name="comparison"/> from start to end indexes.
+        /// </summary>
+        /// <typeparam name="T">
+        /// Any type.
+        /// </typeparam>
+        /// <param name="array">
+        /// The sorted array.
+        /// </param>
+        /// <param name="soughtValue">
+        /// The value to search.
+        /// </param>
+        /// <param name="comparer">
+        /// Type that implements IComparer<typeparamref name="T"/> interface.
+        /// </param>
+        /// <param name="startIndex">
+        /// The start index for the search.
+        /// </param>
+        /// <param name="endIndex">
+        /// The start index for the search.
+        /// </param>
+        /// <returns>
+        /// The value's index of the first position found or null if this value does not exists in array.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when the <paramref name="array"/> of <paramref name="soughtValue"/> or <paramref name="comparison"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown when:
+        /// The type <typeparamref name="T"/> does not implements IComparable<T>.
+        /// The <paramref name="array"/> is empty.
+        /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Thrown when the <paramref name="startIndex"/> is less than zero of <paramref name="endIndex"/> is more or equal length of array.
+        /// </exception>
+        public static int? BinarySearch<T>(T[] array, T soughtValue, int startIndex, int endIndex, IComparer<T> comparer)
+        {
+            CheckInputData(array, soughtValue, comparer);
+
+            return BinarySearch(array, soughtValue, 0, array.Length - 1, comparer.Compare);
+        }
+
+        /// <summary>
+        /// Method performs binary search in sorted array according to <paramref name="comparison"/> from start to end indexes.
+        /// </summary>
+        /// <typeparam name="T">
+        /// Any type.
+        /// </typeparam>
+        /// <param name="array">
+        /// The sorted array.
+        /// </param>
+        /// <param name="soughtValue">
+        /// The value to search.
+        /// </param>
+        /// <param name="comparison">
+        /// Delegate that performs the comparison of two value.
+        /// </param>
+        /// <param name="startIndex">
+        /// The start index for the search.
+        /// </param>
+        /// <param name="endIndex">
+        /// The start index for the search.
+        /// </param>
+        /// <returns>
+        /// The value's index of the first position found or null if this value does not exists in array.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when the <paramref name="array"/> of <paramref name="soughtValue"/> or <paramref name="comparison"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown when:
+        /// The type <typeparamref name="T"/> does not implements IComparable<T>.
+        /// The <paramref name="array"/> is empty.
+        /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Thrown when the <paramref name="startIndex"/> is less than zero of <paramref name="endIndex"/> is more or equal length of array.
+        /// </exception>
+        public static int? BinarySearch<T>(T[] array, T soughtValue, int startIndex, int endIndex, Comparison<T> comparison)
+        {
+            CheckInputData(array, soughtValue, startIndex, endIndex, comparison);
+
+            int leftIndex = startIndex;
+            int rightIndex = endIndex;
             int midIndex = 0;
 
             while (leftIndex <= rightIndex)
             {
-                midIndex = (leftIndex + rightIndex) >> 1;
+                midIndex = leftIndex + ((rightIndex - leftIndex) >> 1);
 
                 if (comparison(array[midIndex], soughtValue) == 0)
                 {
@@ -125,10 +209,25 @@ namespace Logic
                 else
                 {
                     rightIndex = midIndex - 1;
-                }                
+                }
             }
 
             return null;
+        }
+
+        private static void CheckInputData<T>(T[] array, T soughtValue, int startIndex, int endIndex, Comparison<T> comparison)
+        {
+            CheckInputData(array, soughtValue, comparison);
+
+            if  (startIndex < 0)
+            {
+                throw new ArgumentOutOfRangeException($"The {nameof(startIndex)} can not be less zero.");
+            }
+
+            if (endIndex >= array.Length)
+            {
+                throw new ArgumentOutOfRangeException($"The {nameof(endIndex)} can not be more or equal length of input array.");
+            }
         }
 
         private static void CheckInputData<T>(T[] array, T soughtValue, IComparer<T> comparer)

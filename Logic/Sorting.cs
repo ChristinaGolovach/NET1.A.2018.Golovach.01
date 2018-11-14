@@ -78,10 +78,8 @@ namespace Logic
         /// </exception>
         public static void MergeSort<T>(T[] array)
         {
-            CheckInputArray(array);
-            
-            CheckImplementationIComparable(array);
-
+            CheckInputArray(array);          
+          
             var comparer = Comparer<T>.Default;
 
             HiddenMergeSort(array, comparer.Compare);
@@ -158,8 +156,6 @@ namespace Logic
         public static void QuickSort<T>(T[] array)
         {
             CheckInputArray(array);
-
-            CheckImplementationIComparable(array);
 
             var comparer = Comparer<T>.Default;
 
@@ -311,19 +307,6 @@ namespace Logic
             if (ReferenceEquals(comparison, null))
             {
                 throw new ArgumentNullException($"The {nameof(comparison)} is null.");
-            }
-        }
-
-        private static void CheckImplementationIComparable<T>(T[] array)
-        {
-            //TODO ask: why this type of check does not work correct
-            //if ((typeof(T) as IComparable<T>) == null)
-            //if(!(array.GetType() == typeof(IComparable<T>)))
-            //if ((array.GetType() as IComparable<T>) == null)
-
-            if (!typeof(IComparable<T>).IsAssignableFrom(typeof(T)))
-            {
-                throw new ArgumentException($"The {typeof(T)} must implement the IComparable<{typeof(T)}> interface.");
             }
         }
     }
